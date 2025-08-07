@@ -1,0 +1,218 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  NORMAL
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum LicenseType {
+  BASIC
+  PREMIUM
+  ENTERPRISE
+}
+
+enum SiteUserRole {
+  ADMIN
+  MEMBER
+}
+
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  website     String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  tenants Tenant[]
+
+  @@map("companies")
+}
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  company_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  company Company @relation(fields: [company_id], references: [id])
+  users   User[]
+  sites   Site[]
+  pages   Page[]
+  assets  Asset[]
+  navigation Navigation[]
+  themes  Theme[]
+  licenses TenantLicense[]
+
+  @@map("tenants")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerk_id  String   @unique
+  email     String   @unique
+  role      UserRole
+  tenant_id String
+  created_at DateTime @default(now())
+
+  tenant Tenant @relation(fields: [tenant_id], references: [id])
+  sites   Site[]
+  pages   Page[]
+  page_versions PageVersion[]
+  assets  Asset[]
+  site_users SiteUser[]
+
+  @@map("users")
+}
+
+model Site {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String
+  description String?
+  tenant_id   String
+  created_by  String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenant_id], references: [id])
+  creator User @relation(fields: [created_by], references: [id])
+  pages   Page[]
+  assets  Asset[]
+  navigation Navigation?
+  theme   Theme?
+  site_users SiteUser[]
+
+  @@map("sites")
+}
+
+model Page {
+  id         String     @id @default(cuid())
+  title      String
+  slug       String
+  content    Json
+  status     PageStatus @default(DRAFT)
+  site_id    String
+  tenant_id  String
+  created_by String
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+
+  site   Site @relation(fields: [site_id], references: [id])
+  tenant Tenant @relation(fields: [tenant_id], references: [id])
+  creator User @relation(fields: [created_by], references: [id])
+  versions PageVersion[]
+
+  @@map("pages")
+}
+
+model PageVersion {
+  id             String     @id @default(cuid())
+  page_id        String
+  version_number Int
+  title          String
+  content        Json
+  status         PageStatus
+  created_by     String
+  created_at     DateTime   @default(now())
+  is_current     Boolean    @default(false)
+
+  page    Page @relation(fields: [page_id], references: [id])
+  creator User @relation(fields: [created_by], references: [id])
+
+  @@map("page_versions")
+}
+
+model Navigation {
+  id         String @id @default(cuid())
+  site_id    String @unique
+  tenant_id  String
+  structure  Json
+  updated_at DateTime @updatedAt
+
+  site   Site @relation(fields: [site_id], references: [id])
+  tenant Tenant @relation(fields: [tenant_id], references: [id])
+
+  @@map("navigation")
+}
+
+model Asset {
+  id         String @id @default(cuid())
+  name       String
+  file_path  String
+  file_type  String
+  file_size  Int
+  site_id    String
+  tenant_id  String
+  uploaded_by String
+  created_at DateTime @default(now())
+
+  site   Site @relation(fields: [site_id], references: [id])
+  tenant Tenant @relation(fields: [tenant_id], references: [id])
+  uploader User @relation(fields: [uploaded_by], references: [id])
+
+  @@map("assets")
+}
+
+model Theme {
+  id             String @id @default(cuid())
+  site_id        String @unique
+  tenant_id      String
+  primary_color  String
+  secondary_color String
+  custom_css     String?
+  updated_at     DateTime @updatedAt
+
+  site   Site @relation(fields: [site_id], references: [id])
+  tenant Tenant @relation(fields: [tenant_id], references: [id])
+
+  @@map("themes")
+}
+
+model TenantLicense {
+  id              String       @id @default(cuid())
+  tenant_id       String
+  license_type    LicenseType
+  max_sites       Int
+  max_users       Int
+  max_storage_gb  Int
+  start_date      DateTime
+  end_date        DateTime
+  is_active       Boolean      @default(true)
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+
+  tenant Tenant @relation(fields: [tenant_id], references: [id])
+
+  @@map("tenant_licenses")
+}
+
+model SiteUser {
+  site_id    String
+  user_id    String
+  role       SiteUserRole
+  created_at DateTime @default(now())
+
+  site Site @relation(fields: [site_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
+
+  @@id([site_id, user_id])
+  @@map("site_users")
+}
