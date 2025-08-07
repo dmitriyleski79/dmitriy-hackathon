@@ -3,7 +3,6 @@
 import { ArrowLeft, Edit, Eye, Save } from 'lucide-react';
 import Link from 'next/link';
 import { Site } from '@/lib/mock-data';
-import { cn } from '@/lib/utils';
 
 interface SiteHeaderProps {
   site: Site;

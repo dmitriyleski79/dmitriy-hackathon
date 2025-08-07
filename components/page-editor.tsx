@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Save, Eye, ArrowLeft, X } from 'lucide-react';
+import { Save, Eye, ArrowLeft } from 'lucide-react';
 import { RichTextEditor } from './rich-text-editor';
-import { cn } from '@/lib/utils';
 
 interface PageEditorProps {
   initialContent?: string;

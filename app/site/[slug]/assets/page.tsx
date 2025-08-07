@@ -68,8 +68,8 @@ const mockAssets = [
   }
 ];
 
-export default function AssetsPage({ params }: AssetsPageProps) {
-  const site = mockSites.find(s => s.slug === params.slug);
+export default async function AssetsPage({ params }: AssetsPageProps) {
+  const site = mockSites.find(s => s.slug === (await params).slug);
   
   if (!site) {
     notFound();

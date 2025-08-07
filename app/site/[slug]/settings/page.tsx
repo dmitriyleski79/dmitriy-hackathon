@@ -10,8 +10,8 @@ interface SettingsPageProps {
   };
 }
 
-export default function SettingsPage({ params }: SettingsPageProps) {
-  const site = mockSites.find(s => s.slug === params.slug);
+export default async function SettingsPage({ params }: SettingsPageProps) {
+  const site = mockSites.find(s => s.slug === (await params).slug);
   
   if (!site) {
     notFound();

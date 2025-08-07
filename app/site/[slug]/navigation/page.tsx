@@ -10,8 +10,8 @@ interface NavigationPageProps {
   };
 }
 
-export default function NavigationPage({ params }: NavigationPageProps) {
-  const site = mockSites.find(s => s.slug === params.slug);
+export default async function NavigationPage({ params }: NavigationPageProps) {
+  const site = mockSites.find(s => s.slug === (await params).slug);
   
   if (!site) {
     notFound();

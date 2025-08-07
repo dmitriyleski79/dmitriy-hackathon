@@ -10,8 +10,8 @@ interface ThemePageProps {
   };
 }
 
-export default function ThemePage({ params }: ThemePageProps) {
-  const site = mockSites.find(s => s.slug === params.slug);
+export default async function ThemePage({ params }: ThemePageProps) {
+  const site = mockSites.find(s => s.slug === (await params).slug);
   
   if (!site) {
     notFound();

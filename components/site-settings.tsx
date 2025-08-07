@@ -10,7 +10,6 @@ import {
   RotateCcw
 } from 'lucide-react';
 import { Site } from '@/lib/mock-data';
-import { cn } from '@/lib/utils';
 
 interface SiteSettingsProps {
   site: Site;
@@ -50,7 +49,7 @@ export function SiteSettings({ site }: SiteSettingsProps) {
     siteUrl: `https://company.com/${site.slug}`
   });
 
-  const updateSetting = (key: keyof SettingsData, value: any) => {
+  const updateSetting = (key: keyof SettingsData, value: string | boolean | number | string[]) => {
     setSettings(prev => ({ ...prev, [key]: value }));
   };
 

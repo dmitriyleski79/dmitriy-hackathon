@@ -10,7 +10,7 @@ import {
   Save,
   RotateCcw
 } from 'lucide-react';
-import { Site } from '@/lib/mock-data';
+
 import { cn } from '@/lib/utils';
 
 interface NavigationItem {
@@ -22,9 +22,7 @@ interface NavigationItem {
   isActive?: boolean;
 }
 
-interface NavigationEditorProps {
-  site: Site;
-}
+
 
 const defaultNavigation: NavigationItem[] = [
   {
@@ -82,7 +80,7 @@ const defaultNavigation: NavigationItem[] = [
   }
 ];
 
-export function NavigationEditor({ site }: NavigationEditorProps) {
+export function NavigationEditor() {
   const [navigation, setNavigation] = useState<NavigationItem[]>(defaultNavigation);
   const [editingItem, setEditingItem] = useState<string | null>(null);
   const [isPreviewMode, setIsPreviewMode] = useState(false);

@@ -9,6 +9,7 @@ export interface Site {
   userCount: number;
   pageCount: number;
   lastUpdated: string;
+  layout?: string;
 }
 
 export interface User {
@@ -30,7 +31,8 @@ export const mockSites: Site[] = [
     recentActivity: 'Updated employee handbook',
     userCount: 45,
     pageCount: 12,
-    lastUpdated: '2 hours ago'
+    lastUpdated: '2 hours ago',
+    layout: 'modern'
   },
   {
     id: '2',
@@ -42,7 +44,8 @@ export const mockSites: Site[] = [
     recentActivity: 'Added Q4 budget report',
     userCount: 23,
     pageCount: 8,
-    lastUpdated: '1 day ago'
+    lastUpdated: '1 day ago',
+    layout: 'classic'
   },
   {
     id: '3',
@@ -54,7 +57,8 @@ export const mockSites: Site[] = [
     recentActivity: 'Updated software inventory',
     userCount: 67,
     pageCount: 15,
-    lastUpdated: '3 hours ago'
+    lastUpdated: '3 hours ago',
+    layout: 'minimal'
   },
   {
     id: '4',
@@ -66,7 +70,8 @@ export const mockSites: Site[] = [
     recentActivity: 'Added new API documentation',
     userCount: 34,
     pageCount: 20,
-    lastUpdated: '5 hours ago'
+    lastUpdated: '5 hours ago',
+    layout: 'portal'
   },
   {
     id: '5',
@@ -78,7 +83,8 @@ export const mockSites: Site[] = [
     recentActivity: 'Updated sales playbook',
     userCount: 28,
     pageCount: 10,
-    lastUpdated: '1 day ago'
+    lastUpdated: '1 day ago',
+    layout: 'modern'
   }
 ];
 

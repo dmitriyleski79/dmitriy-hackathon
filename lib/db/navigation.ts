@@ -4,11 +4,11 @@ import { Navigation } from '@prisma/client'
 export interface CreateNavigationData {
   site_id: string
   tenant_id: string
-  structure: any
+  structure: Record<string, unknown>
 }
 
 export interface UpdateNavigationData {
-  structure: any
+  structure: Record<string, unknown>
 }
 
 export interface NavigationWithRelations extends Navigation {

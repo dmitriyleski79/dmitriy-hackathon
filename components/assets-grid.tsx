@@ -6,7 +6,6 @@ import {
   Video, 
   Download, 
   Trash2, 
-  MoreVertical,
   Eye
 } from 'lucide-react';
 import { cn } from '@/lib/utils';

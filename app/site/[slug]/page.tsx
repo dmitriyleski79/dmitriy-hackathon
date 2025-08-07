@@ -9,8 +9,8 @@ interface SitePageProps {
   };
 }
 
-export default function SitePage({ params }: SitePageProps) {
-  const site = mockSites.find(s => s.slug === params.slug);
+export default async function SitePage({ params }: SitePageProps) {
+  const site = mockSites.find(s => s.slug === (await params).slug);
   
   if (!site) {
     notFound();

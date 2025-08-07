@@ -57,20 +57,20 @@ const mockVersions = [
   }
 ];
 
-export default function VersionsPage({ params }: VersionsPageProps) {
-  const site = mockSites.find(s => s.slug === params.slug);
+export default async function VersionsPage({ params }: VersionsPageProps) {
+  const site = mockSites.find(s => s.slug === (await params).slug);
 
   if (!site) {
     notFound();
   }
 
-  const handleRestore = (version: any) => {
+  const handleRestore = (version: typeof mockVersions[0]) => {
     // In a real app, this would restore the version
     console.log('Restoring version:', version);
     alert(`Restoring version ${version.version_number}...`);
   };
 
-  const handlePreview = (version: any) => {
+  const handlePreview = (version: typeof mockVersions[0]) => {
     // In a real app, this would show a preview
     console.log('Previewing version:', version);
     alert(`Previewing version ${version.version_number}...`);

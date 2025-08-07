@@ -59,8 +59,8 @@ const mockPages = [
   }
 ];
 
-export default function PagesPage({ params }: PagesPageProps) {
-  const site = mockSites.find(s => s.slug === params.slug);
+export default async function PagesPage({ params }: PagesPageProps) {
+  const site = mockSites.find(s => s.slug === (await params).slug);
   
   if (!site) {
     notFound();
@@ -84,7 +84,7 @@ export default function PagesPage({ params }: PagesPageProps) {
                 <p className="text-gray-600">Manage your site pages and content</p>
               </div>
               <a 
-                href={`/site/${params.slug}/pages/create`}
+                href={`/site/${(await params).slug}/pages/create`}
                 className="bg-[#3161D1] text-white px-4 py-2 rounded-md hover:bg-[#2A4FA8] transition-colors"
               >
                 Create New Page

@@ -4,7 +4,7 @@ import { Page, PageStatus } from '@prisma/client'
 export interface CreatePageData {
   title: string
   slug: string
-  content: any
+  content: Record<string, unknown>
   status: PageStatus
   site_id: string
   tenant_id: string
@@ -14,7 +14,7 @@ export interface CreatePageData {
 export interface UpdatePageData {
   title?: string
   slug?: string
-  content?: any
+  content?: Record<string, unknown>
   status?: PageStatus
 }
 
@@ -26,14 +26,13 @@ export interface PageWithRelations extends Page {
   }
   creator: {
     id: string
-    name: string
     email: string
   }
   versions: {
     id: string
     version_number: number
     title: string
-    content: any
+    content: Record<string, unknown>
     status: PageStatus
     created_at: Date
     is_current: boolean
@@ -63,7 +62,6 @@ export class PagesService {
         creator: {
           select: {
             id: true,
-            name: true,
             email: true
           }
         },
@@ -91,7 +89,6 @@ export class PagesService {
         creator: {
           select: {
             id: true,
-            name: true,
             email: true
           }
         },
@@ -120,7 +117,6 @@ export class PagesService {
         creator: {
           select: {
             id: true,
-            name: true,
             email: true
           }
         },
@@ -152,10 +148,10 @@ export class PagesService {
   // Create a new version of a page
   static async createPageVersion(page_id: string, data: {
     title: string
-    content: any
+    content: Record<string, unknown>
     status: PageStatus
     created_by: string
-  }): Promise<any> {
+  }): Promise<Record<string, unknown>> {
     // Get the current version number
     const currentVersion = await prisma.pageVersion.findFirst({
       where: { page_id },
@@ -185,7 +181,7 @@ export class PagesService {
   }
 
   // Get page versions
-  static async getPageVersions(page_id: string): Promise<any[]> {
+  static async getPageVersions(page_id: string): Promise<Record<string, unknown>[]> {
     return await prisma.pageVersion.findMany({
       where: { page_id },
       include: {

@@ -7,11 +7,7 @@ import {
   Building2, 
   Settings, 
   CreditCard, 
-  HelpCircle,
-  Users,
-  FileText,
-  Image as ImageIcon,
-  Palette
+  HelpCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -44,6 +40,11 @@ const navigationItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+
+  // Don't render sidebar on auth pages
+  if (pathname.startsWith('/auth')) {
+    return null;
+  }
 
   return (
     <div className="fixed left-0 top-0 h-full w-[230px] bg-white border-r border-gray-200 flex flex-col">

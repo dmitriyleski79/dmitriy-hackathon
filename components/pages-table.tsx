@@ -6,7 +6,6 @@ import {
   Trash2,
   Copy,
   Eye,
-  MoreVertical,
   ChevronUp,
   ChevronDown,
   Clock

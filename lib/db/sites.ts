@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { Site, User } from '@prisma/client'
+import { Site } from '@prisma/client'
 
 export interface CreateSiteData {
   name: string
@@ -23,7 +23,6 @@ export interface SiteWithRelations extends Site {
   }
   creator: {
     id: string
-    name: string
     email: string
   }
   _count: {
@@ -55,7 +54,6 @@ export class SitesService {
         creator: {
           select: {
             id: true,
-            name: true,
             email: true
           }
         },
@@ -85,7 +83,6 @@ export class SitesService {
         creator: {
           select: {
             id: true,
-            name: true,
             email: true
           }
         },
@@ -117,7 +114,6 @@ export class SitesService {
         creator: {
           select: {
             id: true,
-            name: true,
             email: true
           }
         },
