@@ -83,9 +83,12 @@ export default function PagesPage({ params }: PagesPageProps) {
                 <h1 className="text-2xl font-bold text-gray-900">Pages</h1>
                 <p className="text-gray-600">Manage your site pages and content</p>
               </div>
-              <button className="bg-[#3161D1] text-white px-4 py-2 rounded-md hover:bg-[#2A4FA8] transition-colors">
+              <a 
+                href={`/site/${params.slug}/pages/create`}
+                className="bg-[#3161D1] text-white px-4 py-2 rounded-md hover:bg-[#2A4FA8] transition-colors"
+              >
                 Create New Page
-              </button>
+              </a>
             </div>
             
             <PagesTable pages={mockPages} />

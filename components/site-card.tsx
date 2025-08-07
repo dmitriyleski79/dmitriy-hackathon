@@ -1,31 +1,9 @@
 import { Users, FileText, Clock, MoreVertical } from 'lucide-react';
+import { Site } from '@/lib/mock-data';
 import { cn } from '@/lib/utils';
 
 interface SiteCardProps {
-  site: {
-    id: string;
-    name: string;
-    slug: string;
-    description: string | null;
-    tenant_id: string;
-    created_by: string;
-    created_at: Date;
-    updated_at: Date;
-    tenant: {
-      id: string;
-      name: string;
-      slug: string;
-    };
-    creator: {
-      id: string;
-      name: string;
-      email: string;
-    };
-    _count: {
-      pages: number;
-      assets: number;
-    };
-  };
+  site: Site;
 }
 
 const statusColors = {
@@ -43,16 +21,6 @@ const departmentColors = {
 };
 
 export function SiteCard({ site }: SiteCardProps) {
-  // Extract department from site name for demo purposes
-  const department = site.name.includes('HR') ? 'HR' :
-                   site.name.includes('Finance') ? 'Finance' :
-                   site.name.includes('IT') ? 'IT' :
-                   site.name.includes('Development') ? 'Development' :
-                   site.name.includes('Sales') ? 'Sales' : 'Other';
-
-  // Format the last updated date
-  const lastUpdated = new Date(site.updated_at).toLocaleDateString();
-
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
       {/* Header */}
@@ -63,12 +31,15 @@ export function SiteCard({ site }: SiteCardProps) {
           <div className="flex items-center gap-2">
             <span className={cn(
               "px-2 py-1 rounded-full text-xs font-medium",
-              departmentColors[department as keyof typeof departmentColors] || 'bg-gray-100 text-gray-800'
+              departmentColors[site.department as keyof typeof departmentColors] || 'bg-gray-100 text-gray-800'
             )}>
-              {department}
+              {site.department}
             </span>
-            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
-              Active
+            <span className={cn(
+              "px-2 py-1 rounded-full text-xs font-medium",
+              statusColors[site.status]
+            )}>
+              {site.status}
             </span>
           </div>
         </div>
@@ -81,11 +52,11 @@ export function SiteCard({ site }: SiteCardProps) {
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="flex items-center gap-2">
           <Users className="h-4 w-4 text-gray-500" />
-          <span className="text-sm text-gray-600">{site._count.pages} pages</span>
+          <span className="text-sm text-gray-600">{site.userCount} users</span>
         </div>
         <div className="flex items-center gap-2">
           <FileText className="h-4 w-4 text-gray-500" />
-          <span className="text-sm text-gray-600">{site._count.assets} assets</span>
+          <span className="text-sm text-gray-600">{site.pageCount} pages</span>
         </div>
       </div>
 
@@ -94,9 +65,9 @@ export function SiteCard({ site }: SiteCardProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-gray-400" />
-            <span className="text-sm text-gray-600">Last updated</span>
+            <span className="text-sm text-gray-600">{site.recentActivity}</span>
           </div>
-          <span className="text-xs text-gray-500">{lastUpdated}</span>
+          <span className="text-xs text-gray-500">{site.lastUpdated}</span>
         </div>
       </div>
 

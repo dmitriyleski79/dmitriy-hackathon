@@ -1,13 +1,10 @@
 import { Plus, Building2 } from 'lucide-react';
 import { SiteCard } from '@/components/site-card';
-import { getSites } from '@/lib/actions/sites';
+import { mockSites } from '@/lib/mock-data';
 
-// For now, we'll use a demo tenant ID - in a real app this would come from auth
-const DEMO_TENANT_ID = 'demo-tenant-id';
-
-export default async function Home() {
-  const sitesResult = await getSites(DEMO_TENANT_ID);
-  const sites = sitesResult.success ? sitesResult.data || [] : [];
+export default function Home() {
+  // Temporarily use mock data until database is set up
+  const sites = mockSites;
 
   return (
     <div className="p-6">

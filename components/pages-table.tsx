@@ -1,14 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { 
-  Edit, 
-  Trash2, 
-  Copy, 
-  Eye, 
+import {
+  Edit,
+  Trash2,
+  Copy,
+  Eye,
   MoreVertical,
   ChevronUp,
-  ChevronDown
+  ChevronDown,
+  Clock
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -145,6 +146,9 @@ export function PagesTable({ pages }: PagesTableProps) {
                     </button>
                     <button className="text-green-600 hover:text-green-900 p-1">
                       <Eye className="h-4 w-4" />
+                    </button>
+                    <button className="text-purple-600 hover:text-purple-900 p-1">
+                      <Clock className="h-4 w-4" />
                     </button>
                     <button className="text-red-600 hover:text-red-900 p-1">
                       <Trash2 className="h-4 w-4" />
